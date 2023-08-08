@@ -4,32 +4,30 @@
 
 package business;
 
-/**
- * Created by Viktor Belous on 07.08.2023.
- */
-
 import data.BookRepository;
 import domain.Book;
 import java.util.List;
 
-public class BookManager {
-    private BookRepository bookRepository;
+public class BookManager implements BookService {
+    private final BookRepository bookRepository;
 
     public BookManager(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
-    /**
-     *Добавление книги
-     */
-    public void addBook(Book book) {
+    @Override
+    public void addBook(String title, String author, double price) {
+        Book book = new Book(title, author, price);
         bookRepository.addBook(book);
     }
 
-    public void removeBook(Book book) {
+    @Override
+    public void removeBook(String title, String author, double price) {
+        Book book = new Book(title, author, price);
         bookRepository.removeBook(book);
     }
 
+    @Override
     public List<Book> getAllBooks() {
         return bookRepository.getAllBooks();
     }

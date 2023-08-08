@@ -1,8 +1,7 @@
 package presentation;
-/**
- * Created by Viktor Belous on 07.08.2023.
- */
+
 import business.BookManager;
+import business.BookService;
 import data.BookRepository;
 import data.InMemoryBookRepository;
 import domain.Book;
@@ -10,11 +9,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static BookManager bookManager;
+    private static BookService bookService;
 
     public static void main(String[] args) {
         BookRepository bookRepository = new InMemoryBookRepository();
-        bookManager = new BookManager(bookRepository);
+        bookService = new BookManager(bookRepository);
 
         Scanner scanner = new Scanner(System.in);
 
@@ -29,20 +28,11 @@ public class Main {
             scanner.nextLine(); // Считываем символ новой строки после ввода числа
 
             switch (choice) {
-                case 1:
-                    addBook(scanner);
-                    break;
-                case 2:
-                    removeBook(scanner);
-                    break;
-                case 3:
-                    showAllBooks();
-                    break;
-                case 4:
-                    System.exit(0);
-                    break;
-                default:
-                    System.out.println("Invalid choice");
+                case 1 -> addBook(scanner);
+                case 2 -> removeBook(scanner);
+                case 3 -> showAllBooks();
+                case 4 -> System.exit(0);
+                default -> System.out.println("Invalid choice");
             }
         }
     }
@@ -58,8 +48,7 @@ public class Main {
         double price = scanner.nextDouble();
         scanner.nextLine();
 
-        Book book = new Book(title, author, price);
-        bookManager.addBook(book);
+        bookService.addBook(title, author, price);
 
         System.out.println("Book added successfully");
     }
@@ -75,20 +64,20 @@ public class Main {
         double price = scanner.nextDouble();
         scanner.nextLine();
 
-        Book book = new Book(title, author, price);
-        bookManager.removeBook(book);
+        bookService.removeBook(title, author, price);
 
         System.out.println("Book removed successfully");
     }
 
     private static void showAllBooks() {
-        List<Book> books = bookManager.getAllBooks();
+        List<Book> books = bookService.getAllBooks();
 
         if (books.isEmpty()) {
             System.out.println("No books found");
         } else {
             for (Book book : books) {
                 System.out.println(book.getTitle() + " by " + book.getAuthor() + " - $" + book.getPrice());
+                System.out.println("");
             }
         }
     }

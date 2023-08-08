@@ -1,7 +1,8 @@
-package data;
-/**
- * Created by Viktor Belous on 07.08.2023.
+/*
+ * Created by Viktor Belous, - "08.08.2023"
  */
+package data;
+
 import domain.Book;
 import java.util.ArrayList;
 import java.util.List;
